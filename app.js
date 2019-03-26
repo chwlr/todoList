@@ -3,12 +3,14 @@ const form = document.querySelector("#task-form");
 const taskInput = document.querySelector("#task");
 const filter = document.querySelector("#filter");
 const taskList = document.querySelector(".collection");
-const clearBtn = document.querySelector(".clear-task");
+const clearBtn = document.querySelector(".clear-tasks");
 
 loadEventListeners();
 
 function loadEventListeners() {
   form.addEventListener('submit', addTask)
+  taskList.addEventListener('click', removeTask)
+  clearBtn.addEventListener('click', clearTask)
 }
 
 function addTask(e){
@@ -38,4 +40,18 @@ function addTask(e){
   }
 
 
+}
+
+function removeTask(e){
+  if(e.target.parentElement.classList.contains('delete-item')){
+    if(confirm('delete ?')){
+      e.target.parentElement.parentElement.remove()
+    }
+  }
+}
+
+function clearTask(e){
+  if(confirm('delete?')){
+    taskList.innerHTML = 'please add ur task'
+  }
 }
