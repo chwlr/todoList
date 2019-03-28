@@ -11,6 +11,7 @@ function loadEventListeners() {
   form.addEventListener('submit', addTask)
   taskList.addEventListener('click', removeTask)
   clearBtn.addEventListener('click', clearTask)
+  filter.addEventListener('keyup', filterTask)
 }
 
 function addTask(e){
@@ -38,8 +39,6 @@ function addTask(e){
   }else{
     alert('please input ur to do list')
   }
-
-
 }
 
 function removeTask(e){
@@ -54,4 +53,20 @@ function clearTask(e){
   if(confirm('delete?')){
     taskList.innerHTML = 'please add ur task'
   }
+}
+
+function filterTask(e){
+  const keyWord = e.target.value.toLowerCase()
+  const todos = document.querySelectorAll('.collection-item')
+
+  todos.forEach(function(todo) {
+    const valueContent = todo.firstChild.textContent.toLowerCase()
+    
+    if(valueContent.indexOf(keyWord) !== -1 ){
+      todo.style.display = 'block'
+    }else{
+      todo.style.display = 'none'
+    }
+  })
+
 }
