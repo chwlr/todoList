@@ -33,7 +33,7 @@ function addTask(e){
 
   //inject final element
   taskList.appendChild(li)
-
+  storeTaskInLocalStorage(taskInput.value)
   // clear input
   taskInput.value = ''
   }else{
@@ -45,6 +45,7 @@ function removeTask(e){
   if(e.target.parentElement.classList.contains('delete-item')){
     if(confirm('delete ?')){
       e.target.parentElement.parentElement.remove()
+      removeTaskInLocalStorage(e.target.parentElement.parentElement)
     }
   }
 }
@@ -61,7 +62,6 @@ function filterTask(e){
 
   todos.forEach(function(todo) {
     const valueContent = todo.firstChild.textContent.toLowerCase()
-    
     if(valueContent.indexOf(keyWord) !== -1 ){
       todo.style.display = 'block'
     }else{
@@ -69,4 +69,34 @@ function filterTask(e){
     }
   })
 
+}
+
+
+function storeTaskInLocalStorage(task){
+  let tasks;
+  if (localStorage.getItem('tasks') === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+  }
+
+  tasks.push(task)
+  localStorage.setItem('tasks', JSON.stringify(tasks))
+}
+
+function removeTaskInLocalStorage(taskItem) {
+  let tasks;
+  if (localStorage.getItem('tasks') === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
+  }
+
+  tasks.forEach((task, index) => {
+    if (taskItem.textContent === task) {
+      tasks.splice(index, 1);
+    }
+  })
+
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
